@@ -1,0 +1,197 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+<link href="https://fonts.googleapis.com/css2?family=PlayfairDisplay:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.minty.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Three.js Water Shader</title>
+  <style>
+    body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Playfair Display', serif;
+}
+
+.ui-panel {
+  position: absolute; /* overlay on top of canvas */
+  top: 0;
+  bottom: 0;
+  left: 0;            /* change to right: 0; if you want right side */
+  width: 300px;       /* adjust width */
+  background-color: rgba(86, 101, 114, 0.701); /* semi-transparent */
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* top-align content */
+  z-index: 10; /* make sure it's above the Three.js canvas */
+}
+
+/* .ui-panel .section {
+  margin-bottom: 20px;
+} */
+
+#hero {
+      position: relative;
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden;
+    }
+
+.ui-panel h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.ui-panel p {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+    .progress {
+      height: 22px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      box-shadow: 0 0 12px #00c6ff;
+      transition: width 0.6s ease;
+    }
+    #goal-popup {
+  position: fixed;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  background: rgba(0,0,0,0.7);
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#goal-popup.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+#donation-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:9999;
+    }
+  .notification {
+  background: rgba(97, 90, 90, 0.61);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-weight: normal;
+  font-size:1rem;
+  opacity: 0;
+  transform: translateY(50%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+.notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+    
+
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .ui-panel {
+        top: auto;
+        bottom: 5%;
+        right: 50%;
+        transform: translateX(50%);
+        width: 90%;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+<div class="container mt-8">
+        <div class ="card shadow-lg border-0 rounded-4">
+        </div>
+  </div>
+  <div class="ui-panel left">
+   <div class="col-md-15 bg-dark text-white p-3 d-flex flex-column justify-content-center">
+    <h2>Target</h2>
+    <p id="targetText"> $<span id="waterAmount"></span> /$10,000</p>
+    <div class="progress mb-3">
+      <div class="progress-bar" id="progressBarFill" role="progressbar" style="width: 50%;"></div>
+    </div>
+   </div>
+   <br>
+   <br>
+   <br>
+     <div class="section mb-4">
+    <h4>Top Contributors</h4>
+    <ul class="list-unstyled top-contributors">
+      <li>Jane Doe - $500</li>
+      <li>John Smith - $350</li>
+      <!-- dynamically populate -->
+    </ul>
+  </div>
+
+  <!-- All Contributors -->
+  <div class="section">
+    <h4>All Contributors</h4>
+    <ul class="list-unstyled all-contributors">
+      <li>Alice - $50</li>
+      <li>Bob - $30</li>
+      <li>Charlie - $20</li>
+      <!-- dynamically populate -->
+    </ul>
+  </div>
+
+   
+  </div>
+  
+  <!-- <div class ="ui-panel left">
+    <div class="section">
+      <h2> Target
+        <p id="targetText"> $<span id="waterAmount"></span> /$10,000</p>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+      </h2>
+    </div>
+  </div> -->
+  <div id="donation-notification"></div>
+
+  <div id="goal-popup"> Goal Reached !!!</div>
+  <script type="module" src="./src/main.js"></script>
+
+  
+    
+</body>
+
+</html>
+
